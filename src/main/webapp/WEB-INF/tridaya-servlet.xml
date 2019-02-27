@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/mvc 
+		http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd">
+
+	<context:component-scan base-package = "com.fladioarmandika" />
+
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name = "prefix" value = "/WEB-INF/views/" />
+		<property name = "suffix" value = ".jsp" />
+	</bean>
+	
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+		<property name="url" value="jdbc:mysql://127.0.0.1/tridaya?useSSL=false"/>
+		<property name="username" value="fladioarmandika"/> 
+		<property name="password" value="91378531"/>
+	</bean>
+	
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
+	
+	
+	<bean id="siswaDao" class="com.fladioarmandika.tridaya.dao.SiswaDaoImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	<bean id="pengajarDao" class="com.fladioarmandika.tridaya.dao.PengajarDaoImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	<bean id="jadwalDao" class="com.fladioarmandika.tridaya.dao.JadwalDaoImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	<bean id="mataPelajaranDao" class="com.fladioarmandika.tridaya.dao.MataPelajaranDaoImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate"/>
+		<property name="programDao" ref="programDao"/>
+	</bean>
+	<bean id="petugasDao" class="com.fladioarmandika.tridaya.dao.PetugasDaoImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>  
+	<bean id="ruanganDao" class="com.fladioarmandika.tridaya.dao.RuanganDaoImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>  
+	<bean id="pembelajaranDao" class="com.fladioarmandika.tridaya.dao.PembelajaranDaoImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate"/>
+		<property name="jadwalDao" ref="jadwalDao"/>
+		<property name="mataPelajaranDao" ref="mataPelajaranDao"/>
+		<property name="pengajarDao" ref="pengajarDao"/>
+		<property name="ruanganDao" ref="ruanganDao"/>
+	</bean>
+	<bean id="programDao" class="com.fladioarmandika.tridaya.dao.ProgramDaoImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	<bean id="pembayaranDao" class="com.fladioarmandika.tridaya.dao.PembayaranDaoImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate"/>
+		<property name="petugasDao" ref="petugasDao"/>
+		<property name="siswaDao" ref="siswaDao"/>
+	</bean>
+	
+	
+	<bean id="jadwalService" class="com.fladioarmandika.tridaya.service.JadwalService">
+		<property name="jadwalDao" ref="jadwalDao"/>
+	</bean>
+	<bean id="mataPelajaranService" class="com.fladioarmandika.tridaya.service.MataPelajaranService">
+		<property name="mataPelajaranDao" ref="mataPelajaranDao"/>
+	</bean>	
+	<bean id="pembelajaranService" class="com.fladioarmandika.tridaya.service.PembelajaranService">
+		<property name="pembelajaranDao" ref="pembelajaranDao"/>
+	</bean>
+	<bean id="pengajarService" class="com.fladioarmandika.tridaya.service.PengajarService">
+		<property name="pengajarDao" ref="pengajarDao"/>
+	</bean>
+	<bean id="petugasService" class="com.fladioarmandika.tridaya.service.PetugasService">
+		<property name="petugasDao" ref="petugasDao"/>
+	</bean>
+	<bean id="programService" class="com.fladioarmandika.tridaya.service.ProgramService">
+		<property name="programDao" ref="programDao"/>
+	</bean>
+	<bean id="ruanganService" class="com.fladioarmandika.tridaya.service.RuanganService">
+		<property name="ruanganDao" ref="ruanganDao"/>
+	</bean>
+	<bean id="siswaService" class="com.fladioarmandika.tridaya.service.SiswaService">
+		<property name="siswaDao" ref="siswaDao"/>
+	</bean>
+	<bean id="pembayaranService" class="com.fladioarmandika.tridaya.service.PembayaranService">
+		<property name="pembayaranDao" ref="pembayaranDao"/> 
+	</bean>
+	
+	<mvc:resources location="/resources/" mapping="/resources/**"/>
+	<mvc:resources location="/resources/css/" mapping="/resources/css/**"/>
+	<mvc:resources location="/resources/js/" mapping="/resources/js/**"/>
+	<mvc:resources location="/resources/img/" mapping="/resources/img/**"/>
+	<mvc:resources location="/WEB-INF/views/" mapping="/WEB-INF/views/**"/>
+	<mvc:resources location="/WEB-INF/views/component/" mapping="/WEB-INF/views/component/**"/>
+	<mvc:annotation-driven />
+</beans>

@@ -1,0 +1,56 @@
+@font-face {
+    font-family: 'Fredoka One', cursive;
+    font-family: 'Hind Vadodara', sans-serif;
+}
+
+body {
+	font-family: 'Hind Vadodara', sans-serif;
+}
+
+.project-title {
+	padding-top:10px !important; 
+	display: block !important;             
+	font-family: 'Fredoka One', cursive !important;
+	font-size:1.2em !important;            
+}
+
+.cmp-title {
+	color: BLACK !important; 
+	font-family: 'Hind Vadodara', sans-serif; 
+	font-weight: bold !important;        
+}
+
+.row-view {
+	padding: 10px !important;     
+}
+
+.label-view {
+	font-weight: bold;
+	text-transform: uppercase;   
+}
+
+.bt-tambah {
+	color: #FFFFFF !important; 
+	font-weight: bold !important;   
+	
+}
+
+.no-padding:hover {   
+	background: #FFFFFF !important;   
+};
+
+/*table*/  
+table ,tr td{}
+    tbody { 
+        display:block;
+        height:420px;      
+        overflow:auto;
+    }
+    thead, tbody tr {
+        display:table;
+        width:100%;
+        table-layout:fixed;
+    }
+    table {
+        width:100%;  
+    }
